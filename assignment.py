@@ -1,4 +1,5 @@
 #!python
+import sqlite3
 
 """
 Create a program that will store the database for a veterinary
@@ -22,3 +23,8 @@ retrieve a record by phone number and display all of the information
 You will need to create the table yourself. Consider what data types you will
 need to use.
 """
+
+file = 'dbase.db'
+connection = sqlite3.connect(file)
+cursor = connection.cursor()
+

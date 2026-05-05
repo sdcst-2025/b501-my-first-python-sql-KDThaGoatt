@@ -6,13 +6,13 @@ import sqlite3
 file = 'dbase.db'
 connection = sqlite3.connect(file)
 cursor = connection.cursor()
-query = "select * from customers;"
+query = "select * from customers where cnum>1000;"
 cursor.execute(query)
 result = cursor.fetchall()
 
 # We will print the result of the query.
 # uncomment the next line and run the program
-#print(result)
+print(result)
 
 # whoa, note that the result is a bit of a mess.
 # uncomment the next block of code and see how it looks
@@ -44,9 +44,9 @@ result = cursor.fetchall()
 # Comment out line 22 and 23 and uncomment the next block to see how
 # we can display the data nicer:
 # --Block begins
-#print(f"{'ID':>3} {'Name':20} {'Email':25} {'Customer#':10}")
-#for i in result:
-#    print(f"{i[0]:3} {i[1]:20} {i[2]:25} {i[3]:<10}")
+print(f"{'ID':>3} {'Name':20} {'Email':25} {'Customer#':10}")
+for i in result:
+    print(f"{i[0]:3} {i[1]:20} {i[2]:25} {i[3]:<10}")
 # --Block ends
 
 # We can also selectively print only those records that match

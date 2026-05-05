@@ -19,14 +19,14 @@ cursor = connection.cursor()
 # we will generate the command or query just like a string
 # note that the commands must end with a ;
 # uncomment the next line and try running this program
-#query = "PRAGMA table_info(customers);"
+query = "PRAGMA table_info(customers);"
 
 # you will notice that nothing happened. All we did was create a
 # command and didn't do anything with it
 # once we have a command created, we can send it to the cursor
 # and execuite it
 # uncomment the next line and run this program again
-#cursor.execute(query)
+cursor.execute(query)
 
 # again, nothing has happened. Requests and database commands
 # happen behind the scenes. You won't see anything because we didn't
@@ -34,8 +34,8 @@ cursor = connection.cursor()
 # since this command is trying to retrieve data, let's retrieve
 # the data and store it in a variable
 # uncomment the next 2 lines and see the result
-#result = cursor.fetchall()
-#print(result)
+result = cursor.fetchall()
+print(result)
 
 # Open the example2 file and we will start looking at what the data
 # contains
