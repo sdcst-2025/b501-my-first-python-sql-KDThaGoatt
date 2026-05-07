@@ -24,6 +24,9 @@ You will need to create the table yourself. Consider what data types you will
 need to use.
 """
 
+cont = True
+runs = 0
+
 file = 'dbase.db'
 connection = sqlite3.connect(file)
 cursor = connection.cursor()
@@ -41,36 +44,36 @@ def insert():
     owner_email = input("Enter your email: ")
     owner_balance = input("Enter the amount you owe: ")
     date_first_visit = input("Enter the date of your first visit: ")
-    query = "insert into vet (petname, petspecies, petbreed, ownername, ownerphonenumber, owneremail, ownerbalance, datefirstvisit) values (?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (pet_name, pet_species, pet_breed, owner_name, owner_phone_number, owner_email, owner_balance, date_first_visit)
-    cursor.execute(query, values)
+    query = f"insert into vet (petname,petspecies,petbreed,ownername,ownerphonenumber,owneremail,ownerbalance,datefirstvisit) values ('{pet_name}','{pet_species}','{pet_breed}','{owner_name}','{owner_phone_number}','{owner_email}','{owner_balance}','{date_first_visit}');"
+    cursor.execute(query)
+    connection.commit()
 
 def idret():
     id_input = input("Which id do you want to retrieve for?: ")
-    query = f"select * from vet where id={id_input}"
+    query = f"select * from vet where id=('{id_input}');"
     cursor.execute(query)
     result = cursor.fetchall()
-    print(f"{'ID':>3} {'Pet Name':10} {'Pet Species':10} {'Pet Breed':20} {'Owner Name':20} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':5} {'Date First Visit':15}")
+    print(f"{'ID':3} {'Pet Name':10} {'Pet Species':12} {'Pet Breed':15} {'Owner Name':15} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':15} {'First Visit':11}")
     for i in result:
-        print(f"{i[0]:3} {i[1]:10} {i[2]:10} {i[3]:<20} {i[4]:<20} {i[5]:<20} {i[6]:<25} {i[7]:<5} {i[8]:<15}")
+        print(f"{i[0]:<3} {i[1]:10} {i[2]:12} {i[3]:15} {i[4]:15} {i[5]:20} {i[6]:25} {i[7]:15} {i[8]:11}")
 
 def emailret():
     email_input = input("Which email do you want to retrieve for?: ")
-    query = f"select * from vet where owneremail={email_input}"
+    query = f"select * from vet where owneremail=('{email_input}');"
     cursor.execute(query)
     result = cursor.fetchall()
-    print(f"{'ID':>3} {'Pet Name':10} {'Pet Species':10} {'Pet Breed':20} {'Owner Name':20} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':5} {'Date First Visit':15}")
+    print(f"{'ID':3} {'Pet Name':10} {'Pet Species':12} {'Pet Breed':15} {'Owner Name':15} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':15} {'First Visit':11}")
     for i in result:
-        print(f"{i[0]:3} {i[1]:10} {i[2]:10} {i[3]:<20} {i[4]:<20} {i[5]:<20} {i[6]:<25} {i[7]:<5} {i[8]:<15}")
+        print(f"{i[0]:<3} {i[1]:10} {i[2]:12} {i[3]:15} {i[4]:15} {i[5]:20} {i[6]:25} {i[7]:15} {i[8]:11}")
 
 def pnret():
     phone_number_input = input("Which phone number do you want to retrieve for?: ")
-    query = f"select * from vet where ownerphonenumber={phone_number_input}"
+    query = f"select * from vet where ownerphonenumber=('{phone_number_input}');"
     cursor.execute(query)
     result = cursor.fetchall()
-    print(f"{'ID':>3} {'Pet Name':10} {'Pet Species':10} {'Pet Breed':20} {'Owner Name':20} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':5} {'Date First Visit':15}")
+    print(f"{'ID':3} {'Pet Name':10} {'Pet Species':12} {'Pet Breed':15} {'Owner Name':15} {'Owner Phone Number':20} {'Owner Email':25} {'Owner Balance':15} {'First Visit':11}")
     for i in result:
-        print(f"{i[0]:3} {i[1]:10} {i[2]:10} {i[3]:<20} {i[4]:<20} {i[5]:<20} {i[6]:<25} {i[7]:<5} {i[8]:<15}")
+        print(f"{i[0]:<3} {i[1]:10} {i[2]:12} {i[3]:15} {i[4]:15} {i[5]:20} {i[6]:25} {i[7]:15} {i[8]:11}")
 
 def start():
     print("Would you like to \nA: Insert a new record into the database \nB: Retrieve a record by id \nC: Retrieve a record by email \nD: Retrieve a record by phone number")
@@ -83,5 +86,18 @@ def start():
         emailret()
     elif question == 'D' or question == 'd':
         pnret()
+    else:
+        print("unrecognized command")
 
-start()
+while cont == True:
+    if runs == 0:
+        start()
+        runs += 1
+    else:
+        ask = input("Continue? (type y/n): ")
+        if ask == 'y' or ask == 'Y' or ask == 'yes' or ask == 'Yes':
+            start()
+        elif ask == 'n' or ask == 'N' or ask == 'no' or ask == 'No':
+            break
+        else:
+            print("unrecognized command")
